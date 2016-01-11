@@ -410,27 +410,36 @@ const AppGridButton = new Lang.Class({
         this._app = app;
         this._type = appType;
         let styleButton = "popup-menu-item gnomenu-application-grid-button";
-
         let styleLabel = "gnomenu-application-grid-button-label";
+
+        // apps-grid button style set depending on icon size
         if (settings.get_int('apps-grid-icon-size') == 16) {
             styleButton += " x16";
-            styleLabel += " x16";
         } else if (settings.get_int('apps-grid-icon-size') == 22) {
             styleButton += " x22";
-            styleLabel += " x22";
         } else if (settings.get_int('apps-grid-icon-size') == 24) {
             styleButton += " x24";
-            styleLabel += " x24";
         } else if (settings.get_int('apps-grid-icon-size') == 32) {
             styleButton += " x32";
-            styleLabel += " x32";
         } else if (settings.get_int('apps-grid-icon-size') == 48) {
             styleButton += " x48";
-            styleLabel += " x48";
         } else if (settings.get_int('apps-grid-icon-size') == 64) {
             styleButton += " x64";
-            styleLabel += " x64";
         }
+
+        // apps-grid label style set depending on number of columns       
+        if (settings.get_int('apps-grid-column-count') == 3) {
+            styleLabel += " c3";
+        } else if (settings.get_int('apps-grid-column-count') == 4) {
+            styleLabel += " c4";
+        } else if (settings.get_int('apps-grid-column-count') == 5) {
+            styleLabel += " c5";
+        } else if (settings.get_int('apps-grid-column-count') == 6) {
+            styleLabel += " c6";
+        } else if (settings.get_int('apps-grid-column-count') == 7) {
+            styleLabel += " c7";
+        }
+        
         if (settings.get_boolean('hide-categories')) {
             styleButton += " no-categories";
             styleLabel += " no-categories";
@@ -1571,16 +1580,18 @@ const PanelMenuButton = new Lang.Class({
         if (_DEBUG_) global.log("gridbox width = "+gridWidth);
         let scrollWidth = gridWidth + scrollBoxBorder.left + scrollBoxBorder.right + scrollBoxPadding.left + scrollBoxPadding.right;
 
-        if (_DEBUG_) global.log("scrollbox width = "+scrollWidth+" minWidth = "+minWidth);
-        if (scrollWidth >= minWidth) {
-            this.applicationsScrollBox.width = scrollWidth;
-        } else {
-            this.applicationsScrollBox.width = minWidth;
-            let extraWidth = minWidth - scrollWidth;
-            if (_DEBUG_) global.log("EXPAND extra width = "+extraWidth);
-            let gridLayout = this.applicationsGridBox.layout_manager;
-            gridLayout.set_column_spacing(extraWidth / (this._appGridColumns-1));
-        }
+        // rik: commenting out below since no extraWidth exists due to
+        //      .css accounting for number of columns
+        //if (_DEBUG_) global.log("scrollbox width = "+scrollWidth+" minWidth = "+minWidth);
+        //if (scrollWidth >= minWidth) {
+        //    this.applicationsScrollBox.width = scrollWidth;
+        //} else {
+        //    this.applicationsScrollBox.width = minWidth;
+        //    let extraWidth = minWidth - scrollWidth;
+        //    if (_DEBUG_) global.log("EXPAND extra width = "+extraWidth);
+        //    let gridLayout = this.applicationsGridBox.layout_manager;
+        //    gridLayout.set_column_spacing(extraWidth / (this._appGridColumns-1));
+        //}
     },
 
     _resetDisplayApplicationsToStartup: function() {
