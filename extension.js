@@ -903,6 +903,9 @@ const PanelMenuButton = new Lang.Class({
     },
 
     toggleCategoryWorkspaceMode: function(mode) {
+        // disable category switching for wasta - Panacea plans to rework this in the future
+	return;
+
         let toMode = null;
         if (mode != undefined) {
             toMode = mode;
